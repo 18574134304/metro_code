@@ -893,6 +893,10 @@ export default {
     // 提交
     async submit() {
       this.fromData.repair_time = this.fromData.repair_time / 1000;
+      if(this.fromData.describe.length < 5) {
+          this.$message.warning('报修描述不能低于五个字')
+          return
+      }
       let res = await rivingEdit({
         item: this.fromData.item,
         type: this.fromData.type,
