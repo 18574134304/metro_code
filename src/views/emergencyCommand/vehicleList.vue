@@ -332,7 +332,7 @@ export default {
 .vehicle {
   height: 100%;
   .vehicle-header{
-    padding: 40px 31px 32px 30px;
+    padding: 28px 31px 32px 20px;
     height: 80px;
     background: #fff;
   }
@@ -370,6 +370,7 @@ export default {
     flex-wrap: wrap;
     height: 100%;
     margin: 20px;
+    padding-bottom: 70px;
     .vehicle_list_item {
       width: 220px;
       margin-right: 20px;
@@ -466,16 +467,14 @@ export default {
   }
 }
 .footer {
-  width: 91.1%;
+  width: 100%;
   height: 80px;
-  margin-left: -20px;
   background: #ffffffff;
   line-height: 80px;
   text-align: center;
   /* 方法一 */
   position: fixed;
   bottom: 0;
-  padding: 0 20px;
   .vehicle_Pagination {
     margin-top: 20px;
     .el-pager li {

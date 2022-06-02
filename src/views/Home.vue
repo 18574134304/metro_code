@@ -178,6 +178,8 @@ export default {
     // HelloWorld
   },
   mounted() {
+    console.log(this.$route);
+    this.activePath = this.$route.path
     this.client.login({ token: null, uid: this.user.id.toString() });
     this.sn = localStorage.getItem("sn");
     this.channel = this.client.createChannel("demoChannel");
@@ -272,7 +274,6 @@ export default {
   width: 100%;
   // height: 100vh;
   .aside_css {
-    height: 100vh;
     width: 120px !important;
     .el-menu-item-group__title {
       padding-top: 0 !important;
@@ -302,6 +303,7 @@ export default {
 }
 
 .el-aside {
+  overflow: hidden;
   color: #333;
 }
 .el-header,
@@ -317,6 +319,7 @@ export default {
   color: #333;
   text-align: center;
   line-height: 200px;
+  height: calc(100vh - 80px);
 }
 .el-aside .el-menu {
   background-color: #F3F2F9;
@@ -328,8 +331,7 @@ export default {
   background-color: #e9eef3;
   color: #333;
   padding: 0!important;
-  // text-align: center;
-  // line-height: 160px;
+  height: calc(100vh - 80px);
 }
 
 body > .el-container {

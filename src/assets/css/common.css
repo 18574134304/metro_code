@@ -7,8 +7,9 @@
 }
 
 .journal-tag .el-tag {
-    width: 116px;
+    width: 74px;
     height: 42px;
     text-align: center;
+    font-size: 18px;
     line-height: 42px;
 }
