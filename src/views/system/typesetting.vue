@@ -427,7 +427,7 @@ export default {
       let res = await trainGetList({
         keyword: this.keyword,
         last_page: this.page.last_page,
-            per_page: this.page.per_page
+        per_page: this.page.per_page
       });
       if (res.data.code == 1) {
         if (res.data.data) {

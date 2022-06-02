@@ -79,21 +79,14 @@
                         </template>
                       </el-table-column>
                     </el-table>
-                  </div>
-
-                  <div class="notice_footer">
-                    <div></div>
-                    <div class="notice_Pagination">
-                      <el-pagination
+                    <el-pagination
                         @size-change="handleSizeChange"
                         @current-change="handleCurrentChange"
-                        background
-                        layout="prev, pager, next,jumper"
-                        :total="tableData.total"
-                        size="medium"
-                      >
-                      </el-pagination>
-                    </div>
+                        :current-page="page.last_page"
+                        :page-size="page.per_page"
+                        layout="total, prev, pager, next"
+                        :total="page.total">
+                    </el-pagination>
                   </div>
                 </el-card>
               </div>
@@ -110,7 +103,7 @@
             :model="ruleForm"
             :rules="rules"
             ref="ruleForm"
-            label-width="90px"
+            label-width="100px"
             class="dialog_ruleForm"
           >
             <el-form-item label="公告标题" prop="title">
@@ -202,7 +195,7 @@
               :model="ruleForm"
               :rules="rules"
               ref="ruleForm"
-              label-width="90px"
+              label-width="100px"
               class="dialog_ruleForm"
             >
               <el-form-item label="下发车辆" prop="train_id">
@@ -275,7 +268,7 @@ export default {
       ruleForm: {
         title: "",
         content: "",
-        train_id: "",
+        train_id: [],
       },
       rules: {
         title: [{ required: true, message: "请输入公告标题", trigger: "blur" }],
@@ -314,6 +307,11 @@ export default {
       keyword: "",
       titleNoitce: "添加公告",
       trainList: [],
+      rowId: null,
+      page: {
+          last_page: 1,
+          per_page: 15
+      }
     };
   },
   components: {
@@ -332,7 +330,7 @@ export default {
     // 获取车辆数据
     async gettrain() {
       let res = await trainGetTrainList({
-        keyword: this.keyword,
+        keyword: this.keyword
       });
       if (res.data.code == 1) {
         if (res.data.data) {
@@ -344,6 +342,14 @@ export default {
         // this.$message.error("登录失败");
       }
     },
+    handleCurrentChange(evl) {
+        this.page.last_page = evl
+        this.init()
+    },
+    handleSizeChange(evl) {
+        this.page.per_page = evl
+        this.init()
+    },
     // 选择车辆
     trainChange(val) {
       console.log(val);
@@ -352,6 +358,8 @@ export default {
       if (this.keyword) {
         clearTimeout(timers);
         timers = setTimeout(() => {
+            this.page.last_page = 1,
+            this.page.per_page = 15
           this.init(); //需要防抖的函数
         }, 800);
       } else {
@@ -361,6 +369,8 @@ export default {
     async init() {
       let res = await getlistBulletin({
         keyword: this.keyword,
+        last_page: this.page.last_page,
+        per_page: this.page.per_page
       });
       if (res.data.code == 1) {
         if (res.data.data) {
@@ -405,6 +415,10 @@ export default {
     submit() {
       this.$refs.ruleForm.validate(async (valid) => {
         if (valid) {
+            if(this.ruleForm.title.length < 5 || this.ruleForm.title.length > 100) {
+                this.$message.warning('title长度不符合要求 5,100')
+                return
+            }
           let res = await addBulletin({
             title: this.ruleForm.title,
             content: this.ruleForm.content,
@@ -460,20 +474,23 @@ export default {
     },
     // 下发记录
     record(index, row) {
-      console.log(row);
-      this.andConfirm(row.id)
+    //   this.andConfirm(row.id)
+      this.rowId = row.id
+      this.editdialog = true;
     },
-    // arr.join("-")
     // 下发记录
     async andConfirm(bulletin_id) {
       let res = await getIssuedListBulletin({
-        bulletin_id	,
+        bulletin_id: this.rowId,
+        train_ids: this.ruleForm.train_id.join(',')
       });
       if (res.data.code == 1) {
         this.recorData = res.data.data
-        this.editdialog = true;
+        this.editdialog = false
+        this.$message.success('下发成功')
       } else {
-        this.$message.error(res.data.msg);
+        this.$message.error('下发失败');
+        this.editdialog = false
       }
     },
     // 删除
