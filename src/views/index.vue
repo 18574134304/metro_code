@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="box">
+    <div class="index-page-box">
       <div class="box_title">HI，欢迎使用地铁车载信息交互可视化终端系统</div>
       <div>
         <el-card class="box_card index-card">
@@ -113,8 +113,8 @@ export default {
 };
 </script>
 
-<style lang="less">
-.box {
+<style lang="less" scoped>
+.index-page-box {
   padding: 40px 34px;
   background-color: #eee;
   .box_title {
