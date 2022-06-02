@@ -263,31 +263,18 @@ export default {
         table_id: item.id,
         keyword: this.keyword,
       });
-      if (res.data.code == 1) {
-        if (res.data.data) {
-          this.tableData = res.data.data;
-          // this.arrList.forEach((item) => {
-          //   item.arrs = [];
-          //   item.forEach((item2) => {
-          //     item.arrs.push(item2.name);
-          //   });
-          // });
-          // this.arrList.forEach((to) => {
-          //   to.min = Math.min(...to.arrs);
-          // });
-          // this.arrList.forEach((last) => {
-          //   last.forEach((last2) => {
-          //     if (last.min == last2.name) {
-          //       last2.color = "成了";
-          //     }
-          //   });
-          // });
+    //   console.log(res.data)
+          if (res.data.code == 1) {
+            if(res.data.data) {
+                this.tableData = res.data.data;
+            }else {
+                this.tableData = [];
+                this.$message.warning(res.data.msg)
+            }
         } else {
-          this.tableData = {};
+            this.$message.error(res.data.msg);
+            this.tableData = [];
         }
-      } else {
-        this.$message.error(res.data.msg.time);
-      }
     },
 
     //

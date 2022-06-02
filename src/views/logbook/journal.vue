@@ -843,6 +843,7 @@ export default {
       if (res.data.code == 1) {
         if (res.data.data) {
           this.fromData = res.data.data;
+          this.fromData.department_id = this.fromData.department_id + ''
           console.log(new Date(this.fromData.finish_time * 1000));
           // this.fromData.repair_time = this.fromData.repair_time * 1000;
           // this.fromData.finish_time = this.fromData.finish_time * 1000;
@@ -881,6 +882,11 @@ export default {
     // 提交
     async submit() {
       this.fromData.repair_time = this.fromData.repair_time / 1000;
+      if(this.fromData.describe.length < 5) {
+          this.$message.warning('报修描述不能低于五个字')
+          return
+      }
+      console.log(1)
       let res = await rivingEdit({
         item: this.fromData.item,
         type: this.fromData.type,
