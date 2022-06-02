@@ -80,9 +80,11 @@
                           }}
                         </template>
                       </el-table-column>
-                      <el-table-column prop="date" label="类型" align="center">
+                      <el-table-column prop="type" label="类型" align="center">
                         <template slot-scope="scope">
-                          {{ scope.row.type == "image" ? "图片" : "视频" }}
+                          <span v-if="scope.row.type == 'image'">图片</span>
+                          <span v-if="scope.row.type == 'video'">视频</span>
+                          <span v-if="scope.row.type == 'pdf'">文档</span>
                         </template>
                       </el-table-column>
                       <el-table-column
@@ -214,7 +216,7 @@
                 <el-form-item
                   label="上传类型"
                   prop="driver_id"
-                  label-width="90px"
+                  label-width="100px"
                 >
                   <div class="div_input">
                     <div></div>
@@ -272,7 +274,7 @@
                               alt=""
                               srcset=""
                             />
-                            <video
+                            <!-- <video
                               v-if="fileType == 'mp4'"
                               :src="showurl"
                               class="video-js vjs-big-play-centered vjs-fluid"
@@ -282,8 +284,10 @@
                               x5-playsinline
                               autoplay="autoplay"
                               ref="video"
-                            ></video>
-                            <span v-if="fileType == 'pdf'">pdf</span>
+                            ></video> -->
+                            <img v-if="fileType == 'mp4'" class="video-js vjs-big-play-centered vjs-fluid" src="../../assets/video.png" alt="">
+                            <img v-if="fileType == 'pdf'" class="video-js vjs-big-play-centered vjs-fluid" src="../../assets/pdf.png" alt="">
+                            <!-- <span v-if="fileType == 'pdf'">pdf</span> -->
                           </div>
                         </div>
                       </div>
@@ -311,7 +315,7 @@
               @click="submitEdit"
               >编辑</el-button
             >
-            <el-button class="dialog_but1" @click="centerDialogVisible = false"
+            <el-button class="dialog_but1" @click="centerDialogVisible = false,fileType = '',treeId = ''"
               >取消</el-button
             >
           </div>
@@ -385,7 +389,7 @@
         </div>
         <span slot="footer">
           <div class="tips_div">
-            <el-button class="div_but" @click="dialogclassification = false"
+            <el-button class="div_but" @click="dialogclassification = false,fileType = '',treeId = ''"
               >取消</el-button
             >
             <el-button
@@ -415,6 +419,7 @@ import {
   editManual,
   delManual,
   getManualList,
+  delectManualList,
   getManualDetails,
   addCategory,
   getCategoryList,
@@ -735,7 +740,9 @@ export default {
       });
       if (res.data.code == 1) {
         this.centerDialogVisible = false;
+        this.fileType = ''
         this.$message.success("添加成功");
+        this.treeId = ''
         this.init();
         this.$refs.upload_img.clearFiles();
       } else {
@@ -751,7 +758,18 @@ export default {
       if (res.data.code == 1) {
         if (res.data.data) {
           this.ruleForm = res.data.data;
+          console.log(this.ruleForm,'aaa')
+          this.imgRul.url = this.ruleForm.url
           this.ruleForm.driver_id = res.data.data.type;
+          if(this.ruleForm.driver_id == 'pdf') {
+              this.fileType = 'pdf'
+          }
+          if(this.ruleForm.driver_id == 'video') {
+              this.fileType = 'mp4'
+          }
+          if(this.ruleForm.driver_id == 'image') {
+              this.fileType = 'img'
+          }
         }
         // 判断图片地址是否为空
         console.log(this.ruleForm.url);
@@ -793,6 +811,8 @@ export default {
       if (res.data.code == 1) {
         this.centerDialogVisible = false;
         this.$message.success("修改成功");
+        this.fileType = ''
+        this.treeId = ''
         this.init();
         this.$refs.upload_img.clearFiles();
       } else {
@@ -807,7 +827,7 @@ export default {
     },
     // 删除确定
     async deteleCurrent() {
-      let res = await getManualList({
+      let res = await delectManualList({
         id: this.deteleRow.id,
       });
       if (res.data.code == 1) {
@@ -891,6 +911,8 @@ export default {
         this.$message.success("添加成功");
         this.dialogclassification = false;
         this.getclassification();
+        this.treeId = ''
+        this.fileType = ''
       } else {
         this.$message.error("添加失败");
       }
@@ -925,6 +947,8 @@ export default {
       if (res.data.code == 1) {
         this.$message.success("修改成功");
         this.dialogclassification = false;
+        this.treeId = ''
+        this.fileType = ''
         this.getclassification();
       } else {
         this.$message.error("修改失败");
