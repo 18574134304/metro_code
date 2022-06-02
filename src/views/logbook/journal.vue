@@ -307,7 +307,6 @@
               <el-input
                 placeholder="报修信息"
                 class="textarea"
-                inputclear="textarea"
                 type="textarea"
                 v-model="fromData.describe"
                 maxlength="50"
@@ -918,7 +917,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" >
 .box {
   width: 100%;
   height: 100%;
@@ -1157,10 +1156,16 @@ export default {
         color: #ffffffff;
         padding: 2px;
       }
+      .dialog_div_report .el-textarea__inner{
+          font-size: 18px;
+        }
       .dialog_div {
         display: flex;
         justify-content: space-between;
         height: 25px;
+        .el-input__inner{
+          font-size: 18px;
+        }
         .dialog_div_title {
           font-size: 17px;
           font-weight: 600;
@@ -1170,7 +1175,7 @@ export default {
           display: flex;
           .content_input input {
             border: none;
-            width: 60px;
+            text-align: right;
             margin-top: -20px;
             padding: 0;
           }
@@ -1219,7 +1224,7 @@ export default {
 
           .content_time input {
             border: none;
-            width: 140px;
+            text-align: right;
             // margin-top: -30px;
             padding: 0;
           }
@@ -1227,7 +1232,7 @@ export default {
             margin-top: -10px;
             .el-date-editor.el-input,
             .el-date-editor.el-input__inner {
-              width: 140px;
+              text-align: right;
             }
             /deep/ .el-date-editor {
               position: relative;
@@ -1249,15 +1254,14 @@ export default {
         }
         .report_textarea {
           .textarea {
-            margin-top: 3px;
+            margin-top: 10px;
           }
           .el-textarea__inner {
             padding: 0;
           }
           .textarea_num {
-            position: relative;
-            bottom: 25px;
-            left: 490px;
+            text-align: right;
+            color: #999;
           }
         }
       }
