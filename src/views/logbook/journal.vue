@@ -79,7 +79,6 @@
                 ></el-input>
               </div>
             </div>
-            <!--  -->
             <div class="head_tabs_middle">
               <div class="middle_card">
                 <div
@@ -91,9 +90,8 @@
                     <div class="box_item">
                       <div class="box_item_1">
                         <div class="journal-tag">
-                          <el-tag
-                            :type="
-                              item.status == 'normal'
+                          <div class="tag"
+                          :class="item.status == 'normal'
                                 ? ''
                                 : item.status == 'repair'
                                 ? 'warning'
@@ -101,28 +99,25 @@
                                 ? 'info'
                                 : item.status == 'finish'
                                 ? 'success'
-                                : 'danger'
-                            "
+                                : 'danger'"
                           >
                             {{
                               item.status == "normal"
                                 ? "正常"
                                 : item.status == "repair"
-                                ? "报修"
+                                ? "待维修"
                                 : item.status == "repaired"
                                 ? "已维修"
                                 : item.status == "finish"
                                 ? "已完成"
                                 : "未知"
                             }}
-                          </el-tag>
+                          </div>
                         </div>
-                        <div>
                           <el-checkbox
                             v-model="item.radio"
                             @change="selectedItem(item)"
                           ></el-checkbox>
-                        </div>
                       </div>
                       <div class="box_item_2">
                         <div>{{ item.train.number }}</div>
@@ -154,26 +149,19 @@
                       </div>
                     </div>
                   </el-card>
-                  <!--  -->
                   <div class="box_item_bottom">
-                    <div>
-                      <span v-if="item.recording">
-                        <span class="item_2_img">
+                    <div style="display: flex;">
+                      <div v-if="item.recording" class="i-box">
                           <img
                             src="../../assets/journal/3.png"
-                            alt=""
-                            srcset=""
-                        /></span>
-                        <span class="item_2_text">语音</span></span
+                          />
+                        <span class="item_2_text">语音</span></div
                       >
-                      <span v-if="item.video" class="bottom_img">
-                        <span class="item_2_img1">
+                      <div v-if="item.video" class="i-box">
                           <img
                             src="../../assets/journal/4.png"
-                            alt=""
-                            srcset=""
-                        /></span>
-                        <span class="item_2_text">视频</span></span
+                          />
+                        <span class="item_2_text">视频</span></div
                       >
                     </div>
                     <div class="bottom_right" @click="detailInfoClick(item.id)">
@@ -938,11 +926,15 @@ export default {
   padding: 0 !important;
   .head {
     .head_card {
-      width: 102%;
-      margin-top: -20px;
-      margin-left: -20px;
+      .el-card__body{
+        padding: 28px 32px 32px 0;
+      }
+      .head_tabs_nr, .el-tabs__header{
+        margin-left: 30px;
+      }
       .head_tabs {
         .head_tabs_nr {
+          margin-top: 20px;
           display: flex;
           justify-content: space-between;
         }
@@ -959,28 +951,53 @@ export default {
           }
         }
         .el-tabs__item {
+          height: 45px;
           font-size: 20px !important;
+          font-weight: 600;
         }
         // .el-tabs__item.is-active {
         //   // color: #004DA1FF  !important;
         // }
         .el-tabs__active-bar {
-          width: 30px !important;
+          width: 50px !important;
           position: absolute;
           bottom: 0;
-          left: 40% !important;
-          height: 3px;
-          background-color: #409eff;
+          left: 50% !important;
+          transform: translateX(-50%) !important;
+          height: 3.5px;
+          font-weight: 600;
+          font-family: PingFang SC;
+          background-color: #004DA1;
           z-index: 1;
+        }
+        .el-tabs__nav-wrap::after{
+          background-color: #E6E6E6;
+          height: 1px;
+        }
+        .is-active{
+          color: #004DA1;
         }
         .head_tabs_select_box {
           display: flex;
           .head_tabs_select {
             width: 120px;
             height: 64px;
+            .el-date-editor{
+              input {
+                background-color: #EDEDED !important;
+                border-color: #EDEDED !important;
+                &::placeholder {
+                  color: #606266;
+                }
+              }
+            }
             .head_tabs_select_item {
               .el-input__inner {
-                background-color: #edededff !important;
+                background-color: #EDEDED !important;
+                border-color: #EDEDED !important;
+                &::placeholder {
+                  color: #606266;
+                }
               }
             }
             .headPicker {
@@ -1008,9 +1025,12 @@ export default {
             .box_item_middle {
               width: 50px;
             }
-            .card_box {
-              width: 48%;
+            .card_box:nth-child(odd) {
               margin-left: 20px;
+            }
+            .card_box {
+              width: 49%;
+              margin-bottom: 20px;
               .box_item {
                 padding: 10px;
                 border-radius: 15px 15px 0 0;
@@ -1018,9 +1038,9 @@ export default {
                 box-sizing: border-box;
                 
                 .box_item_1 {
-                  
                   display: flex;
                   justify-content: space-between;
+                  align-items: center;
                 }
                 .box_item_2 {
                   margin-top: 20px;
@@ -1028,8 +1048,8 @@ export default {
                   font-size: 18px;
                   align-items: center;
                   .item_2_img {
-                    width: 22px;
-                    height: 30px;
+                    width: 23px;
+                    height: 26px;
                     margin-right: 5px;
                     display: inline-block;
                     img {
@@ -1048,37 +1068,38 @@ export default {
         }
         //
         .box_item_bottom {
+          box-sizing: border-box;
           width: 100%;
           display: flex;
           justify-content: space-between;
-          // margin: 20px 0;
+          align-items: center;
           background-color: #F7F7F7;
-          height: 80px;
-          line-height: 80px;
-          .item_2_img {
-            width: 22px;
-            height: 30px;
-            margin-right: 5px;
-            display: inline-block;
+          height: 60px;
+          padding-left: 10px;
+          border-bottom-left-radius: 15px;
+          border-bottom-right-radius: 15px;
+          .i-box{
             cursor: pointer;
-            font-size: 28px;
-            color: #333333;
-            img {
-              width: 100%;
-              height: 100%;
+            display: flex;
+            align-items: center;
+            margin-left: 8px;
+            color: #333;
+            font-size: 16px;
+            img{
+              vertical-align: middle;
+              width: 16px;
+              height: 24px;
+            }
+            
+            span{
+              margin-left: 5px;
             }
           }
-          .item_2_img1 {
-            width: 30px;
-            height: 27px;
-            margin-right: 5px;
-            cursor: pointer;
-            display: inline-block;
-            font-size: 28px;
-            color: #333333;
-            img {
-              width: 100%;
-              height: 100%;
+          .i-box:nth-child(2){
+            margin-left: 30px;
+            img{
+              width: 26px;
+              height: 25px;
             }
           }
 
@@ -1097,15 +1118,16 @@ export default {
   }
   //
   .footer {
-    width: 91.1%;
+    box-sizing: border-box;
     height: 80px;
-    margin-left: -20px;
     background: #ffffffff;
     line-height: 80px;
     text-align: center;
     /* 方法一 */
     position: fixed;
     bottom: 0;
+    left: 120px;
+    right: 0;
     padding: 0 20px;
     .footer_box {
       display: flex;
@@ -1283,5 +1305,41 @@ export default {
     width: 100%;
     height: 100%;
   }
+}
+
+.journal-tag .tag{
+  width: 74px;
+  height: 42px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 42px;
+  background-color: #FFF;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.journal-tag .tag.warning {
+  border-color: rgba(247, 219, 5, 0.1);
+  background-color:rgba(247, 219, 5, 0.1);
+  color: rgb(247, 219, 5);
+}
+.journal-tag .tag.info {
+  background-color:rgba(144, 147, 153, 1);
+  color: #fff;
+}
+.journal-tag .tag.success {
+  border-color: rgba(36, 237, 0, 0.1);
+  background-color:rgba(36, 237, 0, 0.1);
+  color: rgb(36, 237, 0);
+}
+.journal-tag .tag.danger {
+  border-color: rgba(246, 6, 6, 0.1);
+  background-color:rgba(246, 6, 6, 0.1);
+  color: rgb(246, 6, 6);
+}
+.el-checkbox .el-checkbox__inner{
+  border-radius: 50%;
+  transform: scale(1.5);
 }
 </style>
