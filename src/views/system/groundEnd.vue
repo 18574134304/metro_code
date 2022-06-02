@@ -126,7 +126,7 @@
                 </el-card>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="排版管理" name="typesetting"> </el-tab-pane>
+            <el-tab-pane label="排班管理" name="typesetting"> </el-tab-pane>
             <el-tab-pane label="电子手册" name="electronics"> </el-tab-pane>
             <el-tab-pane label="公告" name="notice"> </el-tab-pane>
           </el-tabs>
@@ -619,9 +619,9 @@ export default {
 <style lang="less">
 .head_groundEnd {
   .head_groundEnd_card {
-    width: 102%;
-    margin-top: -20px;
-    margin-left: -20px;
+    .el-card__body {
+      padding: 0;
+    }
     .head_groundEnd_tabs {
       font-size: 18px;
       .groundEnd_tabs_nr {
@@ -661,18 +661,24 @@ export default {
       }
       .el-tabs__item {
         font-size: 20px !important;
+        height: 45px;
+        font-weight: 600;
+          
+        &:hover {
+          color: #004DA1;
+        }
       }
       .el-tabs__item.is-active {
-        // color: #004DA1FF  !important;
-        font-weight: 600;
+        color: #004DA1  !important;
       }
       .el-tabs__active-bar {
-        width: 30px !important;
+        width: 50px !important;
         position: absolute;
         bottom: 0;
-        left: 9% !important;
-        height: 3px;
-        background-color: #409eff;
+        left: 8% !important;
+        height: 3.5px;
+        font-weight: 600;
+        background-color: #004DA1;
         z-index: 1;
       }
     }
@@ -686,6 +692,7 @@ export default {
   .groundEnd_footer {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 20px;
     .groundEnd_Pagination {
       margin-right: 20px;
       .el-pager li {
@@ -854,5 +861,12 @@ export default {
       }
     }
   }
+}
+.system_tabs_nr ,.groundEnd_tabs_nr , .typesetting_tabs_nr, .electronics_tabs_nr ,.notice_tabs_nr{
+  padding: 0 30px!important;
+}
+.el-tabs__header{
+  margin-top: 28px;
+  margin-left: 30px;
 }
 </style>

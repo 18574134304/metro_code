@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="drive">
     <div class="head">
       <el-card class="head_card">
         <div class="head_div_nr">
@@ -29,7 +29,7 @@
     <div class="middle_nr">
       <div class="middle" v-for="(arrtiem, index) in tableData.data" :key="index" @click="tiemClick(index)">
         <div :class="
-          clickindex == index ? 'div_border middle_card' : 'middle_card'
+          clickindex == index ? 'div_border drive-middle_card' : 'drive-middle_card'
         ">
           <el-card class="card_item">
             <div>
@@ -72,7 +72,7 @@
       </div>
     </div>
     <!--底部  -->
-    <div class="footer">
+    <div class="drive-footer">
       <div class="drive_Pagination">
         <div class="Pagination_div" v-for="(item, index) in bottomList" :key="index">
           <div :class="index == indexs ? 'click_item' : 'div_item'" @click="itemClick(item, index)">
@@ -302,8 +302,10 @@ export default {
 </script>
 
 <style lang="less">
-.head {
+#drive{
+  .head {
   .head_div_nr {
+    margin: 28px 30px 20px 30px;
     display: flex;
     justify-content: space-between;
 
@@ -328,7 +330,14 @@ export default {
     margin-top: -20px;
     margin-left: -20px;
     border-radius: 0 0 15px 15px;
-
+    .el-date-editor {
+      .el-input__inner {
+            background-color: #EDEDED !important;
+            &::placeholder {
+                  color: #606266;
+                }
+          }
+    }
     .head_div_select_box {
       display: flex;
 
@@ -337,7 +346,10 @@ export default {
 
         .head_div_select_item {
           .el-input__inner {
-            background-color: #edededff !important;
+            background-color: #EDEDED !important;
+            &::placeholder {
+                  color: #606266;
+                }
           }
         }
       }
@@ -345,9 +357,12 @@ export default {
       .select_left {
         margin-left: 20px;
 
-        // .input__inner {
-        //   background-color: #edededff !important;
-        // }
+        .input__inner {
+          background-color: #EDEDED !important;
+          &::placeholder {
+                  color: #606266;
+                }
+        }
         .headPicker {
           width: 140px !important;
         }
@@ -358,16 +373,20 @@ export default {
 
 .middle_nr {
   display: flex;
-  // justify-content: space-between;
   flex-wrap: wrap;
+  padding: 0 26px;
+  padding-bottom: 80px;
 }
-
+.middle:nth-child(3n - 1) {
+  margin-left: 26px;
+  margin-right: 26px;
+}
 .middle {
+  box-sizing: border-box;
   margin-top: 20px;
-  width: 555px;
-  margin-left: 20px;
-
-  .middle_card {
+  width: 32%;
+  transition: .3s all;
+  .drive-middle_card {
     .card_item {
       border-radius: 15px;
 
@@ -450,21 +469,26 @@ export default {
     }
   }
 }
+}
 
-.footer {
-  width: 91.1%;
+
+.drive-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
   height: 80px;
-  margin-left: -20px;
   background: #ffffffff;
   line-height: 80px;
   text-align: center;
   /* 方法一 */
   position: fixed;
+  left: 120px;
+  right: 0;
   bottom: 0;
   padding: 0 20px;
 
   .drive_Pagination {
-    margin-top: 25px !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -501,6 +525,7 @@ export default {
 .div_border {
   border: 2px solid #144ddfff;
   border-radius: 15px;
+  box-shadow: 0px 0px 6px rgba(20, 77, 223, 0.67);
 }
 
 //

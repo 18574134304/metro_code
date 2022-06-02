@@ -1616,4 +1616,11 @@ export default {
   height: 24px;
   overflow-y: auto;
 }
+.system_tabs_nr ,.groundEnd_tabs_nr , .typesetting_tabs_nr, .electronics_tabs_nr ,.notice_tabs_nr{
+  padding: 0 30px!important;
+}
+.el-tabs__header{
+  margin-top: 28px;
+  margin-left: 30px;
+}
 </style>

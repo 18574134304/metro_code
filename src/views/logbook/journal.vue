@@ -177,7 +177,7 @@
       </el-card>
     </div>
     <!--底部  -->
-    <div class="footer">
+    <div class="jour-footer">
       <div class="footer_box">
         <div>
           <el-checkbox @change="changeRadio" v-model="single" size="medium"
@@ -929,6 +929,7 @@ export default {
         padding: 28px 32px 32px 0;
       }
       .head_tabs_nr, .el-tabs__header{
+        margin-top: 0;
         margin-left: 30px;
       }
       .head_tabs {
@@ -953,10 +954,13 @@ export default {
           height: 45px;
           font-size: 20px !important;
           font-weight: 600;
+          &:hover {
+            color: #004DA1;
+          }
         }
-        // .el-tabs__item.is-active {
-        //   // color: #004DA1FF  !important;
-        // }
+        .el-tabs__item.is-active {
+          color: #004DA1  !important;
+        }
         .el-tabs__active-bar {
           width: 50px !important;
           position: absolute;
@@ -1116,7 +1120,7 @@ export default {
     }
   }
   //
-  .footer {
+  .jour-footer {
     box-sizing: border-box;
     height: 80px;
     background: #ffffffff;
@@ -1125,6 +1129,7 @@ export default {
     /* 方法一 */
     position: fixed;
     bottom: 0;
+    z-index: 9999;
     left: 120px;
     right: 0;
     padding: 0 20px;

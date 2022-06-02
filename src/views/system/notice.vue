@@ -11,7 +11,7 @@
           >
             <el-tab-pane label="司机账号管理" name="driver"> </el-tab-pane>
             <el-tab-pane label="地面端账号管理" name="groundEnd"> </el-tab-pane>
-            <el-tab-pane label="排版管理" name="typesetting"> </el-tab-pane>
+            <el-tab-pane label="排班管理" name="typesetting"> </el-tab-pane>
             <el-tab-pane label="电子手册" name="electronics"> </el-tab-pane>
             <el-tab-pane label="公告" name="notice">
               <div class="notice_tabs_nr">
@@ -507,9 +507,9 @@ export default {
 <style lang="less" >
 .head_notice {
   .head_notice_card {
-    width: 102%;
-    margin-top: -20px;
-    margin-left: -20px;
+     .el-card__body {
+      padding: 0;
+    }
     .head_notice_tabs {
       font-size: 18px;
       .notice_tabs_nr {
@@ -540,18 +540,24 @@ export default {
       }
       .el-tabs__item {
         font-size: 20px !important;
+        height: 45px;
+        font-weight: 600;
+          
+        &:hover {
+          color: #004DA1;
+        }
       }
       .el-tabs__item.is-active {
-        // color: #004DA1FF  !important;
-        font-weight: 600;
+        color: #004DA1  !important;
       }
       .el-tabs__active-bar {
         width: 30px !important;
         position: absolute;
         bottom: 0;
         left: 1%;
-        height: 3px;
-        background-color: #409eff;
+        height: 3.5px;
+        font-weight: 600;
+        background-color: #004DA1;
         z-index: 1;
       }
     }
@@ -565,6 +571,7 @@ export default {
   .notice_footer {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 20px;
     .notice_Pagination {
       margin-right: 20px;
       .el-pager li {
@@ -733,5 +740,12 @@ export default {
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 20px;
+}
+.system_tabs_nr ,.groundEnd_tabs_nr , .typesetting_tabs_nr, .electronics_tabs_nr ,.notice_tabs_nr{
+  padding: 0 30px!important;
+}
+.el-tabs__header{
+  margin-top: 28px;
+  margin-left: 30px;
 }
 </style>
