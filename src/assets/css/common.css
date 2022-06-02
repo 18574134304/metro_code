@@ -1,0 +1,14 @@
+.index-card .el-card__body {
+    padding: 0;
+}
+
+.journal-card .el-card__body {
+    padding: 0 !important;
+}
+
+.journal-tag .el-tag {
+    width: 116px;
+    height: 42px;
+    text-align: center;
+    line-height: 42px;
+}

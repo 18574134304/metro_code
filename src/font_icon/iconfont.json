@@ -1,0 +1,51 @@
+{
+  "id": "3377730",
+  "name": "metro_地铁",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "3640193",
+      "name": "人才",
+      "font_class": "rencai",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "29464543",
+      "name": "闪电",
+      "font_class": "shandian-copy",
+      "unicode": "e69b",
+      "unicode_decimal": 59035
+    },
+    {
+      "icon_id": "29568458",
+      "name": "地铁",
+      "font_class": "ditie-copy",
+      "unicode": "e69c",
+      "unicode_decimal": 59036
+    },
+    {
+      "icon_id": "1413433",
+      "name": "日志",
+      "font_class": "rizhi",
+      "unicode": "e69a",
+      "unicode_decimal": 59034
+    },
+    {
+      "icon_id": "5663611",
+      "name": "闪电",
+      "font_class": "shandian",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "18667131",
+      "name": "地铁",
+      "font_class": "ditie",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    }
+  ]
+}
