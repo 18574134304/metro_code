@@ -115,6 +115,7 @@ export default {
 
 <style lang="less">
 .box {
+  padding: 40px 34px;
   background-color: #eee;
   .box_title {
     font-size: 21px;
@@ -213,22 +214,11 @@ export default {
     width: 100%;
     div{
       width: 23%;
-        height: 164px;
       img {
         width: 100%;
         height: 100%;
       }
     }
-    // .box_img_1,
-    // .box_img_2 {
-    //   //   width: 25%;
-    //   width: 400px;
-    //   height: 164px;
-    //   img {
-    //     width: 100%;
-    //     height: 100%;
-    //   }
-    // }
   }
 }
 </style>

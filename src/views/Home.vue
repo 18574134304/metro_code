@@ -23,7 +23,7 @@
         <el-container>
           <!--  -->
           <el-aside class="aside_css">
-            <el-menu class="menu_css" :default-active="activePath" router>
+            <el-menu class="menu_css" :default-active="activePath" router active-text-color="#044E9C">
               <el-menu-item-group>
                 <el-menu-item
                   v-if="index"
@@ -155,13 +155,13 @@ export default {
   name: "Home",
   data() {
     return {
-      activePath: "/emergency_video",
+      activePath: "/index",
       index: true, //"index"
       emergency_command: true, //emergency_command
       driving_og: true, //"driving_og"
       assisted_driving: true, //"assisted_driving"
       system: true, //"system"
-      activePath: "/emergency_video",
+      // activePath: "/emergency_video",
       dialogVisible: false,
       channel: null,
       roleInfo: {},
@@ -296,6 +296,7 @@ export default {
 .el-header {
   background-color: #b3c0d1;
   color: #333;
+  height: 80px!important;
   line-height: 60px;
   padding: 0px;
 }
@@ -312,15 +313,21 @@ export default {
 }
 
 .el-aside {
-  background-color: #d3dce6;
+  background-color: #F3F2F9;
   color: #333;
   text-align: center;
   line-height: 200px;
 }
-
+.el-aside .el-menu {
+  background-color: #F3F2F9;
+}
+.el-aside .el-menu .is-active{
+  background: #DDE0F0;
+}
 .el-main {
   background-color: #e9eef3;
   color: #333;
+  padding: 0!important;
   // text-align: center;
   // line-height: 160px;
 }
@@ -348,9 +355,7 @@ body > .el-container {
   height: 80px;
   .header_div {
     width: 100%;
-    // height: 60px;
     height: 100%;
-    line-height: 60px;
     display: flex;
     justify-content: space-between;
     background-color: #004da1;
@@ -358,11 +363,9 @@ body > .el-container {
     .div_title {
       color: #fff;
       font-size: 20px;
-      line-height: 80px;
       margin-left: 22px;
       .title_span {
         color: #fff !important;
-        font-size: 16px;
         line-height: 80px;
         margin-top: 20px;
         display: inline-block;
@@ -375,6 +378,9 @@ body > .el-container {
       }
     }
   }
+}
+.el-dropdown {
+  font-size: 18px!important;
 }
 .menu_css {
   // width: 120px;

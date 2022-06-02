@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div style="background-color: F9F9FB;">
     <div class="vehicle">
-      <div>
+      <div class="vehicle-header">
         <div class="vehicle_text">车辆列表</div>
         <div class="vehicle_head">
           <div>
@@ -22,7 +22,7 @@
           </div>
         </div>
       </div>
-      <div class="vehicle_list">
+      <div class="vehicle_list" v-if="this.vehicleData.data && this.vehicleData.data.length">
         <div
           class="vehicle_list_item"
           @click="dialSend(item)"
@@ -331,6 +331,11 @@ export default {
 <style lang="less">
 .vehicle {
   height: 100%;
+  .vehicle-header{
+    padding: 40px 31px 32px 30px;
+    height: 80px;
+    background: #fff;
+  }
   .vehicle_text {
     width: 128px;
     height: 45px;
@@ -340,7 +345,6 @@ export default {
     margin-left: 5px;
   }
   .vehicle_head {
-    margin-top: 20px;
     display: flex;
     justify-content: space-between;
     .vehicle_index {
@@ -364,14 +368,12 @@ export default {
   .vehicle_list {
     display: flex;
     flex-wrap: wrap;
-    background-color: #f9f9fb;
     height: 100%;
-    margin-top: 20px;
-    padding: 15px 0;
+    margin: 20px;
     .vehicle_list_item {
       width: 220px;
-      margin-left: 20px;
-      // margin-top: 20px;
+      margin-right: 20px;
+      margin-bottom: 20px;
       cursor: pointer;
       .vehicle_list_item_card {
         border-radius: 5%;
@@ -387,7 +389,6 @@ export default {
         .vehicle_list_item_title {
           margin-top: 15px;
           font-size: 22px;
-          margin-left: 15px;
         }
         .vehicle_list_item_role {
           margin-top: 15px;
