@@ -17,9 +17,9 @@
                   <el-button class="typesetting_btn" @click="typesettingAdd"
                     >添加排班</el-button
                   >
-                  <el-button class="typesetting_btn" @click="Import"
+                  <!-- <el-button class="typesetting_btn" @click="Import"
                     >导入</el-button
-                  >
+                  > -->
                 </div>
                 <div class="nr_input">
                   <el-input
@@ -104,6 +104,14 @@
                         </template>
                       </el-table-column>
                     </el-table>
+                    <el-pagination
+                        @size-change="handleSizeChange"
+                        @current-change="handleCurrentChange"
+                        :current-page="page.last_page"
+                        :page-size="page.per_page"
+                        layout="total, prev, pager, next"
+                        :total="page.total">
+                    </el-pagination>
                   </div>
                 </el-card>
               </div>
@@ -115,22 +123,6 @@
       </div>
     </div>
     <!--底部  -->
-    <div class="footer">
-      <div class="vehicle_Pagination">
-        <div
-          class="Pagination_div"
-          v-for="(item, index) in bottomList"
-          :key="index"
-        >
-          <div
-            :class="index == indexs ? 'click_item' : 'div_item'"
-            @click="itemClick(item, index)"
-          >
-            {{ item.name }}
-          </div>
-        </div>
-      </div>
-    </div>
     <!-- 弹框 -->
     <div class="typesetting_dialog">
       <el-dialog :title="titleDialog" :visible.sync="centerDialogVisible">
@@ -139,7 +131,7 @@
             :model="ruleForm"
             :rules="rules"
             ref="ruleForm"
-            label-width="60px"
+            label-width="100px"
             class="dialog_ruleForm"
           >
             <el-form-item label="司机" prop="driver_id">
@@ -196,7 +188,7 @@
               </div>
             </el-form-item>
             <div class="dialog_div_line"></div>
-            <el-form-item label="排班日期" prop="datetriem" label-width="90px">
+            <el-form-item label="排班日期" prop="datetriem">
               <div class="div_input">
                 <div></div>
                 <div class="content_input_date">
@@ -213,13 +205,13 @@
               </div>
             </el-form-item>
             <div class="dialog_div_line"></div>
-            <el-form-item label="备注" prop="name">
+            <el-form-item label="备注" prop="remark">
               <div class="div_input">
                 <div></div>
                 <div class="content_input">
                   <el-input
                     placeholder="请输入"
-                    v-model="ruleForm.name"
+                    v-model="ruleForm.remark"
                   ></el-input>
                 </div>
               </div>
@@ -263,7 +255,7 @@
         <div class="tips_nr">确定要删除该排班记录吗？</div>
         <span slot="footer">
           <div class="tips_div">
-            <el-button class="div_but" @click="tips = false">取消</el-button>
+            <el-button class="div_but" @click="dialogTips = false">取消</el-button>
             <el-button class="div_but1" type="primary" @click="deteleClick"
               >确 定</el-button
             >
@@ -317,6 +309,9 @@ export default {
         end_time: [
           { required: true, message: "请选择结束时间", trigger: "change" },
         ],
+        remark: [
+          { required: true, message: "请填写备注", trigger: "blur" },
+        ],
       },
 
       activeName: "typesetting",
@@ -332,6 +327,10 @@ export default {
       indexs: "",
       TrainNumberList: [],
       tableId:1,
+      page: {
+          last_page: 1,
+          per_page: 15
+      }
     };
   },
   created() {
@@ -364,6 +363,7 @@ export default {
     itemClick(item, index) {
       this.indexs = index;
       this.tableId=item.id
+      this.init()
     },
     // 获取司机数据
     async getdriver() {
@@ -423,12 +423,18 @@ export default {
     },
     async init() {
       let user = JSON.parse(localStorage.getItem("user"));
+      console.log(this.page,'aaa')
       let res = await trainGetList({
         keyword: this.keyword,
+        last_page: this.page.last_page,
+            per_page: this.page.per_page
       });
       if (res.data.code == 1) {
         if (res.data.data) {
           this.tableData = res.data.data;
+          this.page.last_page = res.data.data.last_page
+          this.page.per_page = res.data.data.per_page
+          this.page.total = res.data.data.total
         } else {
           this.tableData = {};
         }
@@ -484,6 +490,7 @@ export default {
             end_time: this.ruleForm.end_time,
             table_id:1,
             table_bout_id:this.tableId,
+            remark:this.ruleForm.remark,
           });
           if (res.data.code == 1) {
             this.centerDialogVisible = false;
@@ -522,6 +529,7 @@ export default {
             train_id: this.ruleForm.train_id,
             start_time: this.ruleForm.start_time,
             end_time: this.ruleForm.end_time,
+            remark: this.ruleForm.remark,
             id: this.ruleForm.id,
              table_id:1,
             table_bout_id:this.tableId,
@@ -554,12 +562,23 @@ export default {
         this.$message.error(res.data.msg);
       }
     },
+    handleCurrentChange(evl) {
+        this.page.last_page = evl
+        this.init()
+    },
+    handleSizeChange(evl) {
+        this.page.per_page = evl
+        this.init()
+    }
   },
 };
 </script>
 
 <style lang="less">
 .head_typesetting {
+    /deep/ .el-pagination{
+        text-align: center;
+    }
   .head_typesetting_card {
     width: 102%;
     margin-top: -20px;
@@ -797,21 +816,27 @@ export default {
   justify-content: space-between;
 }
 .footer {
-  width: 91.1%;
+//   width: 91.1%;
   height: 80px;
-  margin-left: -20px;
   background: #ffffffff;
   line-height: 80px;
   text-align: center;
   /* 方法一 */
   position: fixed;
   bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   padding: 0 20px;
+  text-align: center;
   .vehicle_Pagination {
+    margin: 0 auto;
     margin-top: 20px;
+    display: flex;
+    align-items: center;
+    
     .Pagination_div {
-      display: flex;
-      justify-content: center;
+    //   display: flex;
+    //   justify-content: center;
       .div_item,
       .click_item {
         cursor: pointer;

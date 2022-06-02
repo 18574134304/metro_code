@@ -144,7 +144,7 @@
             :model="ruleForm"
             :rules="rules"
             ref="ruleForm"
-            label-width="60px"
+            label-width="100px"
             class="dialog_ruleForm"
           >
             <el-form-item label="姓名" prop="nickname">
@@ -181,6 +181,7 @@
                 <div></div>
                 <div class="content_input">
                   <el-input
+                  type="number"
                     placeholder="请输入"
                     v-model="ruleForm.age"
                   ></el-input>
@@ -193,6 +194,7 @@
                 <div></div>
                 <div class="content_input">
                   <el-input
+                  type="number"
                     placeholder="请输入"
                     v-model="ruleForm.driving_age"
                   ></el-input>
@@ -212,7 +214,7 @@
               </div>
             </el-form-item>
             <div class="dialog_div_line"></div>
-            <el-form-item label="密码" prop="password">
+            <el-form-item label="密码"  :required="titleDialog == '添加账号' ? true : false">
               <div class="div_input">
                 <div></div>
                 <div class="content_input">
@@ -225,7 +227,7 @@
               </div>
             </el-form-item>
             <div class="dialog_div_line"></div>
-            <el-form-item label="权限信息" prop="d_id" label-width="90px">
+            <el-form-item label="权限信息" prop="d_id" label-width="120px">
               <div class="div_input">
                 <div></div>
                 <div class="content_input">
@@ -463,7 +465,7 @@ export default {
     async init() {
       let res = await getListAccount({
         keyword: this.keyword,
-        role: this.ruleForm.role,
+        role: 'ground',
         page: this.page,
       });
       if (res.data.code == 1) {
@@ -494,6 +496,10 @@ export default {
     submit() {
       this.$refs.ruleForm.validate(async (valid) => {
         if (valid) {
+            if(this.ruleForm.password.length < 6 || this.ruleForm.password.length > 30) {
+                this.$message.warning('密码长度不符合要求 6,30')
+                return
+            }
           let res = await addAccount({
             nickname: this.ruleForm.nickname,
             gender: this.ruleForm.gender,
@@ -502,7 +508,7 @@ export default {
             number: this.ruleForm.number,
             password: this.ruleForm.password,
             remark: this.ruleForm.remark,
-            role: this.ruleForm.role,
+            role: 'ground',
             d_id: this.ruleForm.d_id,
           });
           if (res.data.code == 1) {
@@ -520,7 +526,7 @@ export default {
     systemAdd() {
       this.titleDialog = "添加账号";
       this.centerDialogVisible = true;
-      this.$refs.ruleForm.resetFields();
+    //   this.$refs.ruleForm.resetFields();
       this.ruleForm = {};
     },
     // 编辑
@@ -535,6 +541,7 @@ export default {
       let res = await getDetailsAccount({ id: this.editData.id });
       if (res.data.code == 1) {
         this.ruleForm = res.data.data;
+        this.ruleForm.d_id = this.ruleForm.d_id + ''
       } else {
         this.$message.error(res.data.msg);
       }
@@ -635,6 +642,16 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+::v-deep input::-webkit-outer-spin-button,
+::v-deep input::-webkit-inner-spin-button {
+-webkit-appearance: none !important;
+}
+::v-deep input[type='number'] {
+-moz-appearance: textfield !important;
+}
+</style>
 
 <style lang="less">
 .head_system {
@@ -864,7 +881,7 @@ export default {
       }
       .div_but,
       .div_but1 {
-        width: 40% !important;
+        width: 48% !important;
         height: 40px !important;
         background-color: #004da1ff;
         border-radius: 30px;
