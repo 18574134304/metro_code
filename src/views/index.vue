@@ -115,6 +115,7 @@ export default {
 
 <style lang="less">
 .box {
+  padding: 40px 34px;
   background-color: #eee;
   .box_title {
     font-size: 21px;
