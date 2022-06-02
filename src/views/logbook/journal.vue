@@ -897,6 +897,7 @@ export default {
           this.$message.warning('报修描述不能低于五个字')
           return
       }
+      console.log(1)
       let res = await rivingEdit({
         item: this.fromData.item,
         type: this.fromData.type,
